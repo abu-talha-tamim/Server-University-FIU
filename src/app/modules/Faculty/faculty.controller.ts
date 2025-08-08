@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import { FacultyServices } from './faculty.service';
 import sendResponse from '../../utils/sendResponse';
+import { CourseServices } from '../Course/course.service';
 
 const getSingleFaculty = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -50,10 +51,44 @@ const deleteFaculty = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const assignFacultiesWithCourse = catchAsync(async (req, res) => {
+    const { courseId } = req.params;
+    const { faculties } = req.body;
 
+    const result = await CourseServices.assignFacultiesWithCourseIntoDB(
+        courseId,
+        faculties,
+    );
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Faculties assigned  successfully',
+        data: result,
+    });
+});
+
+const removeFacultiesFromCourse = catchAsync(async (req, res) => {
+    const { courseId } = req.params;
+    const { faculties } = req.body;
+
+    const result = await CourseServices.removeFacultiesFromCourseFromDB(
+        courseId,
+        faculties,
+    );
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Faculties removed  successfully',
+        data: result,
+    });
+});
 export const FacultyControllers = {
     getAllFaculties,
     getSingleFaculty,
     deleteFaculty,
     updateFaculty,
-};
+    removeFacultiesFromCourse,
+    assignFacultiesWithCourse
+}; 
