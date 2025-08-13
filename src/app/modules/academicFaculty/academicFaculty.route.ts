@@ -3,6 +3,8 @@ import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { AcademicFacultyValidation } from './academicFaculty.validation';
 import { AcademicFacultyControllers } from './academicFaculty.controller';
+import auth from '../../middlewares/auth';
+
 const router = express.Router();
 
 router.post(
@@ -12,16 +14,16 @@ router.post(
     ),
     AcademicFacultyControllers.createAcademicFaculty,
 );
-router.get('/:facultyId', AcademicFacultyControllers.getSingleAcademicFaculty);
+router.get('/:id', AcademicFacultyControllers.getSingleAcademicFaculty);
 
 router.patch(
-    '/:facultyId',
+    '/:id',
     validateRequest(
         AcademicFacultyValidation.updateAcademicFacultyValidationSchema,
     ),
     AcademicFacultyControllers.updateAcademicFaculty,
 );
 
-router.get('/', AcademicFacultyControllers.getAllAcademicFaculty);
+router.get('/', auth(), AcademicFacultyControllers.getAllAcademicFaculty);
 
 export const AcademicFacultyRoutes = router;
