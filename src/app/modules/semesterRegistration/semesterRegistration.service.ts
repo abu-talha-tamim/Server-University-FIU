@@ -48,8 +48,6 @@ const createSemesterRegistrationIntoDB = async (payload: TSemesterRegistration) 
 
 }
 
-
-
 const getAllSemesterRegistrationsFromDB = async (
     query: Record<string, unknown>,
 ) => {
@@ -64,10 +62,6 @@ const getAllSemesterRegistrationsFromDB = async (
     const result = await semesterRegistrationQuery.modelQuery;
     return result;
 };
-
-
-
-
 
 const getSingleSemesterRegistrationsFromDB = async (id: string) => {
     const result = await SemesterRegistration.findById(id);
