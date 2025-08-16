@@ -14,7 +14,11 @@ import { Faculty } from "../Faculty/faculty.model";
 import { AcademicDepartment } from "../academicDepartment/academicDepartment.model";
 import { TFaculty } from "../Faculty/faculty.interface";
 
-const createStudentIntoDB = async (password: string, payload: TStudent) => {
+const createStudentIntoDB = async (
+
+    password: string,
+    payload: TStudent,
+) => {
     // create a user object
     const userData: Partial<Tuser> = {};
 
@@ -23,6 +27,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
     //set student role
     userData.role = 'student';
+    userData.email = payload.email;
 
     // find academic semester info
     const admissionSemester = await AcademicSemester.findById(
@@ -79,6 +84,8 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
     //set student role
     userData.role = 'faculty';
+    // set faculty email
+    userData.email = payload.email;
 
     // find academic department info
     const academicDepartment = await AcademicDepartment.findById(
@@ -135,6 +142,8 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 
     //set student role
     userData.role = 'admin';
+    // set faculty email
+    userData.email = payload.email;
 
     const session = await mongoose.startSession();
 
